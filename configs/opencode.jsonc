@@ -1,0 +1,25 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "soclaas/qwen3.8:27b",
+  "provider": {
+    "soclaas": {
+      "options": {
+	 "baseURL": "https://soclaas-api.comp.nus.edu.sg/v1"
+      },
+      "models": {
+        "qwen3.8:27b": {
+          "name": "Qwen 3.8 27B",
+          "options": {
+            "reasoningEffort": "medium"
+          }
+        },
+        "qwen3.6:35b": {
+          "name": "Qwen 3.6 35B",
+          "options": {
+          }
+        }
+      }
+    }
+  }
+}
+
