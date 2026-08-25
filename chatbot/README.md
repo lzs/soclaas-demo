@@ -12,3 +12,7 @@ loop forever: read from stdin, print response.
 use only standard library.
 ```
 
+```
+can you add a modern text user interface to this chatbot?
+```
+
