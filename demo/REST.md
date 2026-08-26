@@ -26,22 +26,24 @@ curl --silent --show-error "$SOCLAAS_BASE_URL/models" \
 to `false`.
 
 ```sh
-curl --silent --show-error "$SOCLAAS_BASE_URL/chat/completions" \
-  --header "Authorization: Bearer $SOCLAAS_API_KEY" \
-  --header "Content-Type: application/json" \
-  --data '{
-    "model": "'"$SOCLAAS_MODEL"'",
+curl -sS "$SOCLAAS_BASE_URL/chat/completions" \
+  -H "Authorization: Bearer $SOCLAAS_API_KEY" \
+  -H "Content-Type: application/json" \
+  --data @- <<EOM | jq
+{
+    "model": "$SOCLAAS_MODEL",
     "messages": [
-      {"role": "system", "content": "Be concise and helpful."},
-      {"role": "user", "content": "What is an API gateway?"}
+         {"role": "system", "content": "Be concise."},
+         {"role": "user", "content": "Define API gateway."}
     ]
-  }' | jq
+}
+EOM
 ```
 
 To print only the generated text, use `jq` to select the first choice:
 
 ```sh
-curl --silent --show-error "$SOCLAAS_BASE_URL/chat/completions" \
+curl -sS "$SOCLAAS_BASE_URL/chat/completions" \
   --header "Authorization: Bearer $SOCLAAS_API_KEY" \
   --header "Content-Type: application/json" \
   --data '{
@@ -75,14 +77,18 @@ server-sent event as it arrives. The response uses `data:` lines and ends with
 `data: [DONE]`.
 
 ```sh
-curl --silent --show-error --no-buffer "$SOCLAAS_BASE_URL/chat/completions" \
-  --header "Authorization: Bearer $SOCLAAS_API_KEY" \
-  --header "Content-Type: application/json" \
-  --data '{
-    "model": "'"$SOCLAAS_MODEL"'",
-    "messages": [{"role": "user", "content": "List three uses for embeddings."}],
+curl -sS -N "$SOCLAAS_BASE_URL/chat/completions" \
+  -H "Authorization: Bearer $SOCLAAS_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d @- <<EOM
+{
+    "model": "$SOCLAAS_MODEL",
+    "messages": [
+      {"role": "user", "content": "List 3 embedding uses."}
+    ],
     "stream": true
-  }'
+}
+EOM
 ```
 
 ## Send a request body from a file
